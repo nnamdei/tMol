@@ -35,9 +35,10 @@ exports.register = async (req, res, next) => {
     const userTransformed = user.transform();
     const token = generateTokenResponse(user, user.token());
     res.status(httpStatus.CREATED);
+    emailProvider.sendWelcomeEmail(user);
     return res.json({ token, user: userTransformed });
   } catch (error) {
-    return next(User.checkDuplicateEmail(error));
+    return next(error);
   }
 };
 
@@ -50,6 +51,7 @@ exports.login = async (req, res, next) => {
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
     const token = generateTokenResponse(user, accessToken);
     const userTransformed = user.transform();
+    res.status(httpStatus.ACCEPTED);
     return res.json({ token, user: userTransformed });
   } catch (error) {
     return next(error);
