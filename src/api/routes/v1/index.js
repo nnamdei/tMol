@@ -1,6 +1,7 @@
 const express = require("express");
 const userRoutes = require("./user.route");
 const authRoutes = require("./auth.route");
+const rateRoutes = require("./rate.route");
 
 const router = express.Router();
 
@@ -14,7 +15,8 @@ router.get("/status", (req, res) => res.send("OK"));
  */
 router.use("/docs", express.static("docs"));
 
-router.use("/users", userRoutes);
+router.use("/admin/users", userRoutes);
+router.use("/admin/rates", rateRoutes);
 router.use("/auth", authRoutes);
 
 module.exports = router;
