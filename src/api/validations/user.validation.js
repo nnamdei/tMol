@@ -1,9 +1,8 @@
-const Joi = require('joi');
-const User = require('../models/user.model');
+const Joi = require("joi");
+const User = require("../models/user.model");
 
 module.exports = {
-
-  // GET /v1/users
+  // GET /v1/admin/users
   listUsers: {
     query: {
       page: Joi.number().min(1),
@@ -14,7 +13,7 @@ module.exports = {
     },
   },
 
-  // POST /v1/users
+  // POST /v1/admin/users
   createUser: {
     body: {
       email: Joi.string().email().required(),
@@ -24,7 +23,7 @@ module.exports = {
     },
   },
 
-  // PUT /v1/users/:userId
+  // PUT /v1/admin/users/:userId
   replaceUser: {
     body: {
       email: Joi.string().email().required(),
@@ -33,11 +32,13 @@ module.exports = {
       role: Joi.string().valid(User.roles),
     },
     params: {
-      userId: Joi.string().regex(/^[a-fA-F0-9]{24}$/).required(),
+      userId: Joi.string()
+        .regex(/^[a-fA-F0-9]{24}$/)
+        .required(),
     },
   },
 
-  // PATCH /v1/users/:userId
+  // PATCH /v1/admin/users/:userId
   updateUser: {
     body: {
       email: Joi.string().email(),
@@ -46,7 +47,9 @@ module.exports = {
       role: Joi.string().valid(User.roles),
     },
     params: {
-      userId: Joi.string().regex(/^[a-fA-F0-9]{24}$/).required(),
+      userId: Joi.string()
+        .regex(/^[a-fA-F0-9]{24}$/)
+        .required(),
     },
   },
 };
