@@ -1,6 +1,5 @@
 /* eslint-disable arrow-parens */
 const httpStatus = require("http-status");
-const { omit } = require("lodash");
 const Rate = require("../models/rate.model");
 
 /**
@@ -26,15 +25,14 @@ exports.get = (req, res) => res.json(req.locals.rate.transform());
 exports.list = async (req, res, next) => {
   try {
     const rates = await Rate.list(req.query);
-    const transformedRates = await rates.map((rate) => rate.transform());
-    res.json(transformedRates);
+    res.json(rates);
   } catch (error) {
     next(error);
   }
 };
 
 /**
- * Create new user
+ * Create new rate
  * @public
  */
 exports.create = async (req, res, next) => {
@@ -42,8 +40,26 @@ exports.create = async (req, res, next) => {
     const rate = new Rate(req.body);
     const savedRate = await rate.save();
     res.status(httpStatus.CREATED);
-    res.json(savedRate.transform());
+    res.json(savedRate);
   } catch (error) {
     next(error);
   }
+};
+
+/**
+ * Delete rate
+ * @public
+ */
+exports.remove = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await Rate.findOneAndRemove(id);
+    res.status(httpStatus.ACCEPTED);
+  } catch (error) {
+    next(error);
+  }
+  // rate
+  //   .remove()
+  //   .then(() => res.status(httpStatus.NO_CONTENT).end())
+  //   .catch((e) => next(e));
 };
