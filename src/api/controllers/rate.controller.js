@@ -54,9 +54,9 @@ exports.remove = async (req, res, next) => {
   const { id } = req.params;
   try {
     await Rate.findOneAndRemove(id);
-    res.status(httpStatus.ACCEPTED);
+    return res.status(httpStatus.OK).end();
   } catch (error) {
-    next(error);
+    return next(error);
   }
   // rate
   //   .remove()
