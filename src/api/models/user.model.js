@@ -45,14 +45,19 @@ const userSchema = new mongoose.Schema(
       minlength: 11,
       maxlength: 11,
     },
+    accountName: {
+      type: String,
+    },
+    accountNumber: {
+      type: Number,
+    },
+    bankName: {
+      type: String,
+    },
     role: {
       type: String,
       enum: roles,
       default: "user",
-    },
-    picture: {
-      type: String,
-      trim: true,
     },
   },
   {
