@@ -14,15 +14,16 @@ const transporter = nodemailer.createTransport({
     user: emailConfig.username,
     pass: emailConfig.password,
   },
-  secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+  secure: false, // upgrades later with STARTTLS -- change this based on the PORT
 });
 
 // verify connection configuration
 transporter.verify((error) => {
   if (error) {
-    console.log("error with email connection");
+    console.log("error with email connection", error);
+  } else {
+    console.log("Email successful");
   }
-  console.log("Email connection successful");
 });
 
 exports.sendWelcomeEmail = async (user) => {
