@@ -5,14 +5,25 @@ const Transaction = require("../models/transaction.model");
 
 exports.uploadImage = async (req, res, next) => {
   try {
-    const { url } = req.file;
+    // const { url } = req.file;
+    let imageUrlList = []
+    req.files.map((item) => {
+      imageUrlList.push(item.url)
+    })
+    const { paymentMethod, amount, subCategory, cardName } = req.body
     const imageUrl = new Transaction({
-      imageLink: url,
+      paymentMethod,
+      imageLink: imageUrlList,
+      amount,
+      subCategory,
+      cardName
     });
+    console.log(imageUrl)
     const savedImage = await imageUrl.save();
     return res.status(201).json({
       message: "Image saved",
       savedImage,
+
     });
   } catch (error) {
     next(error);

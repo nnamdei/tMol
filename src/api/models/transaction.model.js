@@ -34,10 +34,17 @@ const transactionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    imageLink: {
+    payableAmount: {
       type: String,
+
+    },
+    imageLink: {
+      type: Array,
     },
     eCode: {
+      type: String,
+    },
+    comment: {
       type: String,
     },
   },
