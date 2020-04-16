@@ -30,19 +30,10 @@ const transactionSchema = new mongoose.Schema(
     paymentMethod: {
       type: String,
     },
-
-    payableAmount: {
-      type: String,
-
-    },
-
     imageLink: {
       type: Array,
     },
     eCode: {
-      type: String,
-    },
-    comment: {
       type: String,
     },
   },
