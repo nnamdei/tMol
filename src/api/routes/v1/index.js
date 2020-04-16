@@ -3,6 +3,7 @@ const userRoutes = require("./user.route");
 const authRoutes = require("./auth.route");
 const rateRoutes = require("./rate.route");
 const transactionRoutes = require("./transaction.route");
+const uploadRoute = require("./upload.route");
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use("/admin/users", userRoutes);
 router.use("/rates", rateRoutes);
 router.use("/auth", authRoutes);
 router.use("/transaction", transactionRoutes);
+router.use("/image", uploadRoute);
 
 module.exports = router;

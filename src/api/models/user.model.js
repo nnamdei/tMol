@@ -36,8 +36,6 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       maxlength: 128,
-      index: true,
-      trim: true,
     },
     phone_number: {
       type: Number,

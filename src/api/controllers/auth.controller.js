@@ -50,9 +50,10 @@ exports.login = async (req, res, next) => {
   try {
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
     const token = generateTokenResponse(user, accessToken);
-    const userTransformed = user.transform();
+    // const userTransformed = user.transform();
     res.status(httpStatus.ACCEPTED);
-    return res.json({ token, user: userTransformed });
+
+    return res.json({ token, user });
   } catch (error) {
     return next(error);
   }

@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 const express = require("express");
 const middleware = require("../../middlewares/multerUploads");
-
+const service = require("../../services/uploadProvider");
 const { authorize, ADMIN, LOGGED_USER } = require("../../middlewares/auth");
 
 const router = express.Router();
@@ -29,4 +29,10 @@ router
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated users can access the data
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
-  .post(authorize(LOGGED_USER), middleware.parser.array("image"));
+  .post(
+    authorize(LOGGED_USER),
+    middleware.parser.single("file"),
+    service.uploadImage
+  );
+
+module.exports = router;
