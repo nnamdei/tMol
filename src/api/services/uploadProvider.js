@@ -18,7 +18,23 @@ exports.uploadImage = async (req, res, next) => {
       subCategory,
       cardName
     });
-    console.log(imageUrl)
+ 
+    const { paymentMethod,comment,payableAmount, amount, subCategory, cardName } = req.body;
+    // const { url } = req.files;
+    // eslint-disable-next-line prefer-const
+    let imageUrlList = [];
+    req.files.map((item) => imageUrlList.push(item.url));
+  
+    const imageUrl = new Transaction({
+      paymentMethod,
+      amount,
+      subCategory,
+      cardName,
+      comment,
+      imageLink: imageUrlList,
+    });
+
+
     const savedImage = await imageUrl.save();
     return res.status(201).json({
       message: "Image saved",

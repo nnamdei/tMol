@@ -31,7 +31,7 @@ router
    */
   .post(
     authorize(LOGGED_USER),
-    middleware.parser.array("file"),
+    middleware.parser.array("file", 5),
     service.uploadImage
   );
 

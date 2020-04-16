@@ -20,24 +20,22 @@ const transactionSchema = new mongoose.Schema(
     },
     cardName: {
       type: String,
-      required: true,
     },
     subCategory: {
       type: String,
-      required: true,
     },
     amount: {
       type: String,
-      required: true,
     },
     paymentMethod: {
       type: String,
-      required: true,
     },
+
     payableAmount: {
       type: String,
 
     },
+
     imageLink: {
       type: Array,
     },
