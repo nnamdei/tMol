@@ -32,7 +32,7 @@ exports.uploadUserImage = async (req, res, next) => {
 
 exports.uploadTransactionImage = async (req, res, next) => {
   try {
-    const { paymentMethod, amount, subCategory, cardName } = req.body;
+    // const { paymentMethod, amount, subCategory, cardName } = req.body;
     // const { url } = req.files;
     // eslint-disable-next-line prefer-const
     let imageUrlList = [];
