@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       maxlength: 128,
+      required: true,
     },
     phone_number: {
       type: Number,
@@ -50,6 +51,9 @@ const userSchema = new mongoose.Schema(
       type: Number,
     },
     bankName: {
+      type: String,
+    },
+    profileImageLink: {
       type: String,
     },
     role: {
@@ -95,7 +99,7 @@ userSchema.method({
       "name",
       "email",
       "phone_number",
-      "picture",
+      "profileImageLink",
       "role",
       "createdAt",
     ];
@@ -196,8 +200,8 @@ userSchema.statics = {
    * @param {number} limit - Limit number of users to be returned.
    * @returns {Promise<User[]>}
    */
-  list({ page = 1, perPage = 30, name, email, role }) {
-    const options = omitBy({ name, email, role }, isNil);
+  list({ page = 1, perPage = 30, name, email, profileImageLink, role }) {
+    const options = omitBy({ name, email, profileImageLink, role }, isNil);
 
     return this.find(options)
       .sort({ createdAt: -1 })

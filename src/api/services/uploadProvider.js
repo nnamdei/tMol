@@ -1,9 +1,34 @@
+/* eslint-disable camelcase */
 /* eslint-disable consistent-return */
 /* eslint-disable function-paren-newline */
 /* eslint-disable arrow-parens */
 const Transaction = require("../models/transaction.model");
+const User = require("../models/user.model");
 
-exports.uploadImage = async (req, res, next) => {
+exports.uploadUserImage = async (req, res, next) => {
+  try {
+    const { name, email, password, phone_number } = req.body;
+    const { url } = req.file;
+
+    const imageUrl = new User({
+      name,
+      email,
+      password,
+      phone_number,
+      profileImageLink: url,
+    });
+
+    const savedImage = await imageUrl.save();
+    return res.status(201).json({
+      message: "Image saved",
+      savedImage,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.uploadTransactionImage = async (req, res, next) => {
   try {
     const { paymentMethod, amount, subCategory, cardName } = req.body;
     // const { url } = req.files;
