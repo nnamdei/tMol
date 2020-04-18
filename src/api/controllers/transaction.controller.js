@@ -33,7 +33,6 @@ exports.list = async (req, res, next) => {
         message: "Not found",
       });
     }
-    const 
   } catch (error) {
     next(error);
   }

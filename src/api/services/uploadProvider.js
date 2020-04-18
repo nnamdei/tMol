@@ -10,14 +10,15 @@ exports.uploadUserImage = async (req, res, next) => {
   try {
     const { url } = req.file;
 
-    const updatedImage = await User.findByIdAndUpdate(req.user.id, url, {
+    const updatedImage = await User.findByIdAndUpdate(req.user.id, { profileImageLink: url }, {
       useFindAndModify: false,
-    });
+    }).save();
 
     if (updatedImage) {
       return res.status(201).json({
         message: "Image saved",
         response: url,
+
       });
     }
     return res.status(404).json({

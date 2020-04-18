@@ -1,0 +1,19 @@
+[
+  {
+    "categoryName": "AMAZON",
+    "subCategory": [
+      {
+        "title": "Cash Reciept",
+        "rate": 123
+      },
+      {
+        "title": "Debit Reciept",
+        "rate": 123
+      },
+      {
+        "title": "Ecode",
+        "rate": 123
+      }
+    ]
+  }
+]
