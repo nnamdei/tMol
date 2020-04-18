@@ -19,6 +19,7 @@ exports.uploadUserImage = async (req, res, next) => {
     const uploadedImage = await foundUser.updateOne({ profileImageLink: url });
     return res.status(201).json({
       message: "Image saved",
+      response: foundUser.profileImageLink,
     });
   } catch (error) {
     next(error);

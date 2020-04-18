@@ -17,12 +17,27 @@ const Transaction = require("../models/transaction.model");
 //   }
 // };
 
-// /**
-//  * Get rate
-//  * @public
-//  */
+/**
+ * List transactions
+ * @public
+ */
 
 // exports.get = (req, res) => res.json(req.locals.transaction.transform());
+
+exports.list = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const foundTransaction = await Transaction.findById(id);
+    if (!foundTransaction) {
+      return res.status(httpStatus.NOT_FOUND).json({
+        message: "Not found",
+      });
+    }
+    const 
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.create = async (req, res, next) => {
   try {
