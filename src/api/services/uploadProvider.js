@@ -39,13 +39,13 @@ exports.uploadTransactionImage = async (req, res, next) => {
     // eslint-disable-next-line prefer-const
     let imageUrlList = [];
     req.files.map((item) => imageUrlList.push(item.url));
-    console.log(req);
 
     const imageUrl = new Transaction({
       paymentMethod,
       amount,
       subCategory,
       cardName,
+      user: req.user._id,
       imageLink: imageUrlList,
     });
 

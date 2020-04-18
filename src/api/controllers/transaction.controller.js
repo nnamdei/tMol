@@ -25,14 +25,19 @@ const Transaction = require("../models/transaction.model");
 // exports.get = (req, res) => res.json(req.locals.transaction.transform());
 
 exports.list = async (req, res, next) => {
-  const { id } = req.params;
+  const _id = req.user._id
   try {
-    const foundTransaction = await Transaction.findById(id);
+    const foundTransaction = await Transaction.find({ user: _id });
     if (!foundTransaction) {
       return res.status(httpStatus.NOT_FOUND).json({
         message: "Not found",
       });
     }
+    return res.status(200).json({
+      message: "Success",
+      foundTransaction
+    });
+
   } catch (error) {
     next(error);
   }
@@ -40,7 +45,7 @@ exports.list = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const transactionDetails = new Transaction(req.body);
+    const transactionDetails = new Transaction({ ...req.body, user: req.user._id });
     const savedTransactionDetails = await transactionDetails.save();
     res.status(httpStatus.CREATED);
     return res.json(savedTransactionDetails);
