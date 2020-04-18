@@ -17,7 +17,7 @@ exports.uploadUserImage = async (req, res, next) => {
     if (updatedImage) {
       return res.status(201).json({
         message: "Image saved",
-        updatedImage,
+        response: url,
       });
     }
     return res.status(404).json({
