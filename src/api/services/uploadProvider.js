@@ -10,16 +10,18 @@ exports.uploadUserImage = async (req, res, next) => {
   try {
     const { url } = req.file;
 
-    const foundUser = await User.findById(req.user.id);
-    if (!foundUser) {
-      return res.status(404).json({
-        message: "User not found",
+    const product = await User.findByIdAndUpdate(req.user.id, url, {
+      useFindAndModify: false,
+    });
+
+    if (product) {
+      return res.status(201).json({
+        message: "Image saved",
+        product,
       });
     }
-    const uploadedImage = await foundUser.updateOne({ profileImageLink: url });
-    return res.status(201).json({
-      message: "Image saved",
-      response: foundUser.profileImageLink,
+    return res.status(404).json({
+      message: "User not found",
     });
   } catch (error) {
     next(error);
