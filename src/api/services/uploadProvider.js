@@ -39,10 +39,11 @@ exports.uploadTransactionImage = async (req, res, next) => {
     req.files.map((item) => imageUrlList.push(item.url));
 
     const imageUrl = new Transaction({
-      paymentMethod,
-      amount,
-      subCategory,
-      cardName,
+      // paymentMethod,
+      // amount,
+      // subCategory,
+      // cardName,
+      ...req.body,
       user: req.user._id,
       imageLink: imageUrlList,
     });

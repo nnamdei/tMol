@@ -17,17 +17,29 @@ const transactionSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     cardName: {
       type: String,
+      required: true,
     },
     subCategory: {
       type: String,
+      required: true,
     },
     amount: {
       type: String,
+      required: true,
     },
     paymentMethod: {
+      type: String,
+      required: true,
+    },
+    payableAmount: {
+      type: String,
+      required: true
+    },
+    comment: {
       type: String,
     },
     imageLink: {
