@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable consistent-return */
 /* eslint-disable function-paren-newline */
@@ -7,21 +8,17 @@ const User = require("../models/user.model");
 
 exports.uploadUserImage = async (req, res, next) => {
   try {
-    const { name, email, password, phone_number } = req.body;
     const { url } = req.file;
 
-    const imageUrl = new User({
-      name,
-      email,
-      password,
-      phone_number,
-      profileImageLink: url,
-    });
-
-    const savedImage = await imageUrl.save();
+    const foundUser = await User.findById(req.user.id);
+    if (!foundUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    const uploadedImage = await foundUser.updateOne({ profileImageLink: url });
     return res.status(201).json({
       message: "Image saved",
-      savedImage,
     });
   } catch (error) {
     next(error);

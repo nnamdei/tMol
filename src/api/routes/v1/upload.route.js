@@ -30,7 +30,7 @@ router
    * @apiVersion 1.0.0
    * @apiPermission user
    */
-  .post(
+  .patch(
     authorize(LOGGED_USER),
     middleware.parser.single("file"),
     service.uploadUserImage
