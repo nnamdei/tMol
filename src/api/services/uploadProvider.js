@@ -32,17 +32,18 @@ exports.uploadUserImage = async (req, res, next) => {
 
 exports.uploadTransactionImage = async (req, res, next) => {
   try {
-    const { paymentMethod, amount, subCategory, cardName } = req.body;
+    // const { paymentMethod, amount, subCategory, cardName } = req.body;
     // const { url } = req.files;
     // eslint-disable-next-line prefer-const
     let imageUrlList = [];
     req.files.map((item) => imageUrlList.push(item.url));
 
     const imageUrl = new Transaction({
-      paymentMethod,
-      amount,
-      subCategory,
-      cardName,
+      // paymentMethod,
+      // amount,
+      // subCategory,
+      // cardName,
+      ...req.body,
       user: req.user._id,
       imageLink: imageUrlList,
     });
