@@ -20,11 +20,7 @@ const giftcardSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    rate: {
-      type: Number,
-      required: true,
-    },
-    cardCategory: { type: Array },
+    cardCategory: [{ title: String, rate: Number }],
     role: {
       type: String,
       enum: roles,
