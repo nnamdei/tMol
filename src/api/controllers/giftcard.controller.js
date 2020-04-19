@@ -23,9 +23,10 @@ exports.create = async (req, res, next) => {
     const giftCard = new GiftCard({
       card,
       cardCategory,
-      rate,
+      // rate,
       image,
     });
+
     const newGiftCard = await giftCard.save();
     if (newGiftCard) {
       return res.status(httpStatus.CREATED).json({
