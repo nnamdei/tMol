@@ -28,12 +28,15 @@ router
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated users can access the data
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
-  .post(authorize(LOGGED_USER), controller.create)
 
-  .patch(authorize(LOGGED_USER), controller.edit)
+  .get(controller.getAll)
+  .post(authorize(LOGGED_USER), controller.create);
 
-  .get(authorize(LOGGED_USER), controller.getAll)
+router
+  .route("/:id")
+  .patch(authorize(LOGGED_USER), controller.edit);
 
-  .delete(authorize(LOGGED_USER), controller.delete);
+
+router.route("/:id").delete(authorize(LOGGED_USER), controller.delete);
 
 module.exports = router;

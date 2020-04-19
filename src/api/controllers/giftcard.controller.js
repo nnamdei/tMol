@@ -3,6 +3,7 @@ const httpStatus = require("http-status");
 const GiftCard = require("../models/giftcard.model");
 
 exports.getAll = async (req, res, next) => {
+
   try {
     const giftCards = await GiftCard.find();
     if (giftCards) {
@@ -30,7 +31,7 @@ exports.create = async (req, res, next) => {
     const newGiftCard = await giftCard.save();
     if (newGiftCard) {
       return res.status(httpStatus.CREATED).json({
-        message: "Giftcard",
+        message: "Giftcard created",
         newGiftCard,
       });
     }
