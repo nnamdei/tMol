@@ -45,6 +45,10 @@ const transactionSchema = new mongoose.Schema(
     imageLink: {
       type: Array,
     },
+    status: {
+      type: String,
+      default: "Pending",
+    },
     eCode: {
       type: String,
     },
