@@ -25,6 +25,6 @@ router
    */
   .post(authorize(LOGGED_USER), controller.create);
 
-router.get('/user', authorize(LOGGED_USER), controller.list)
+router.get("/", authorize(LOGGED_USER), controller.list);
 
 module.exports = router;
