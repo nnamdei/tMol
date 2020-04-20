@@ -68,15 +68,24 @@ exports.replace = async (req, res, next) => {
  * Update existing user
  * @public
  */
-exports.update = (req, res, next) => {
-  const ommitRole = req.locals.user.role !== "admin" ? "role" : "";
-  const updatedUser = omit(req.body, ommitRole);
-  const user = Object.assign(req.locals.user, updatedUser);
+exports.update = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
+      useFindAndModify: false,
+    });
+    console.log(updatedUser);
 
-  user
-    .save()
-    .then((savedUser) => res.json(savedUser.transform()))
-    .catch((e) => next(User.checkDuplicateEmail(e)));
+    if (updatedUser) {
+      return res.status(httpStatus.CREATED).json({
+        message: "User updated",
+        updatedUser,
+      });
+    }
+    throw new Error("Update unsuccesful");
+  } catch (error) {
+    return next(error);
+  }
 };
 
 /**

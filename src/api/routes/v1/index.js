@@ -18,8 +18,8 @@ router.get("/status", (req, res) => res.send("OK"));
  */
 router.use("/docs", express.static("docs"));
 
-router.use("/admin/users", userRoutes);
-router.use("/admin/giftcard", giftcardRoute);
+router.use("/users", userRoutes);
+router.use("/giftcard", giftcardRoute);
 router.use("/rates", rateRoutes);
 router.use("/auth", authRoutes);
 router.use("/transaction", transactionRoutes);
