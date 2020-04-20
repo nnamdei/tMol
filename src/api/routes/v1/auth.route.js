@@ -1,6 +1,9 @@
 const express = require("express");
 const validate = require("express-validation");
 const controller = require("../../controllers/auth.controller");
+const services = require("../../services/updateBankDetails");
+const { authorize, LOGGED_USER } = require("../../middlewares/auth");
+
 const oAuthLogin = require("../../middlewares/auth").oAuth;
 const {
   login,
@@ -99,6 +102,10 @@ router
 router
   .route("/reset-password")
   .post(validate(passwordReset), controller.resetPassword);
+
+router
+  .route("/bank-details")
+  .patch(authorize(LOGGED_USER), services.updateBankDetails);
 
 /**
  * @api {post} v1/auth/facebook Facebook Login
