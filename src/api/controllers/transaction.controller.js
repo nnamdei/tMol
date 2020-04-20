@@ -27,7 +27,7 @@ const Transaction = require("../models/transaction.model");
 exports.list = async (req, res, next) => {
   const _id = req.user._id;
   try {
-    const foundTransaction = await Transaction.find({ user: _id });
+    const foundTransaction = await Transaction.find({ user: _id }).populate('user');
     if (!foundTransaction) {
       return res.status(httpStatus.NOT_FOUND).json({
         message: "Not found",
