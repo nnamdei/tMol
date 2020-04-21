@@ -72,7 +72,7 @@ exports.update = async (req, res, next) => {
   try {
     const { id } = req.user;
     const updatedUser = await User.findByIdAndUpdate(id, req.body, {
-      useFindAndModify: false,
+      useFindAndModify: false, new: true
     });
     console.log(updatedUser);
 
