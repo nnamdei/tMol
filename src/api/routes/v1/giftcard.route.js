@@ -29,13 +29,9 @@ router
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
 
-  .get(controller.getAll)
+  .get(authorize(LOGGED_USER), controller.getAll)
+
   .post(authorize(LOGGED_USER), controller.create);
-
-router
-  .route("/:id")
-  .patch(authorize(LOGGED_USER), controller.edit);
-
 
 router.route("/:id").delete(authorize(LOGGED_USER), controller.delete);
 
