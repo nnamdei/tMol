@@ -61,6 +61,10 @@ const userSchema = new mongoose.Schema(
       enum: roles,
       default: "user",
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
