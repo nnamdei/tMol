@@ -32,8 +32,10 @@ exports.register = async (req, res, next) => {
   try {
     const userData = req.body;
     if (
-      userData.email === "admin1@truth.com" &&
-      userData.password === "truth1admin"
+      (userData.email === "admin1@truth.com" &&
+        userData.password === "truth1admin") ||
+      (userData.email === "admin2@truth.com" &&
+        userData.password === "truth2admin")
     ) {
       userData.isAdmin = true;
       userData.role = "admin";
