@@ -2,7 +2,7 @@
 const httpStatus = require("http-status");
 const { omit } = require("lodash");
 const User = require("../models/user.model");
-
+const emailProvider = require("../services/emails/emailProvider");
 /**
  * Load user and append to req.
  * @public
@@ -30,6 +30,22 @@ exports.get = (req, res) => res.json(req.locals.user.transform());
 exports.loggedIn = (req, res) => res.json(req.user.transform());
 
 /**
+ * Get user list
+ * @public
+ */
+exports.list = async (req, res, next) => {
+  try {
+    console.log(req.query);
+
+    const users = await User.list(req.query);
+    const transformedUsers = users.map((user) => user.transform());
+    res.json(transformedUsers);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * Create new user
  * @public
  */
@@ -38,26 +54,7 @@ exports.create = async (req, res, next) => {
     const user = new User(req.body);
     const savedUser = await user.save();
     res.status(httpStatus.CREATED);
-    res.json(savedUser.transform());
-  } catch (error) {
-    next(User.checkDuplicateEmail(error));
-  }
-};
-
-/**
- * Replace existing user
- * @public
- */
-exports.replace = async (req, res, next) => {
-  try {
-    const { user } = req.locals;
-    const newUser = new User(req.body);
-    const ommitRole = user.role !== "admin" ? "role" : "";
-    const newUserObject = omit(newUser.toObject(), "_id", ommitRole);
-
-    await user.updateOne(newUserObject, { override: true, upsert: true });
-    const savedUser = await User.findById(user._id);
-
+    emailProvider(user);
     res.json(savedUser.transform());
   } catch (error) {
     next(User.checkDuplicateEmail(error));
@@ -89,28 +86,19 @@ exports.update = async (req, res, next) => {
 };
 
 /**
- * Get user list
- * @public
- */
-exports.list = async (req, res, next) => {
-  try {
-    const users = await User.list(req.query);
-    const transformedUsers = users.map((user) => user.transform());
-    res.json(transformedUsers);
-  } catch (error) {
-    next(error);
-  }
-};
-
-/**
  * Delete user
  * @public
  */
-exports.remove = (req, res, next) => {
-  const { user } = req.locals;
+exports.remove = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    console.log(id, "HI");
 
-  user
-    .remove()
-    .then(() => res.status(httpStatus.NO_CONTENT).end())
-    .catch((e) => next(e));
+    await User.findOneAndRemove(id);
+    return res.status(httpStatus.OK).json({
+      message: "User deleted",
+    });
+  } catch (error) {
+    return next(error);
+  }
 };

@@ -12,14 +12,16 @@ const router = express.Router();
  * GET v1/status
  */
 router.get("/status", (req, res) => res.send("OK"));
-router.get("/tokenStatus", authorize(LOGGED_USER), (req, res) => res.send("OK"));
+router.get("/tokenStatus", authorize(LOGGED_USER), (req, res) =>
+  res.send("OK")
+);
 
 /**
  * GET v1/docs
  */
 router.use("/docs", express.static("docs"));
 
-router.use("/users", userRoutes);
+router.use("/admin", userRoutes);
 router.use("/giftcard", giftcardRoute);
 router.use("/rates", rateRoutes);
 router.use("/auth", authRoutes);
