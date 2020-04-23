@@ -143,11 +143,6 @@ Replace my Docker username with yours:
 nano deploy.sh
 ```
 
-Run deploy script:
-
-```bash
-npm deploy
-
 
 ## License
 
