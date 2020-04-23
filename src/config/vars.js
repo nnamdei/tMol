@@ -30,4 +30,12 @@ module.exports = {
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   },
+  adminDetails: {
+    email: process.env.ADMIN_EMAIL,
+    password: process.env.ADMIN_PASSWORD,
+  },
+  adminDetails2: {
+    email: process.env.ADMIN_EMAIL2,
+    password: process.env.ADMIN_PASSWORD2,
+  },
 };

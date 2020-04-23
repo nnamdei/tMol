@@ -4,7 +4,7 @@ const RefreshToken = require("../models/refreshToken.model");
 const PasswordResetToken = require("../models/passwordResetToken.model");
 const moment = require("moment-timezone");
 const { jwtExpirationInterval } = require("../../config/vars");
-const { omit } = require("lodash");
+const { adminDetails, adminDetails2 } = require("../../config/vars");
 const APIError = require("../utils/APIError");
 const emailProvider = require("../services/emails/emailProvider");
 
@@ -32,10 +32,10 @@ exports.register = async (req, res, next) => {
   try {
     const userData = req.body;
     if (
-      (userData.email === "admin1@truth.com" &&
-        userData.password === "truth1admin") ||
-      (userData.email === "admin2@truth.com" &&
-        userData.password === "truth2admin")
+      (userData.email === adminDetails.email &&
+        userData.password === adminDetails.password) ||
+      (userData.email === adminDetails2.email &&
+        userData.password === adminDetails2.password)
     ) {
       userData.isAdmin = true;
       userData.role = "admin";
