@@ -8,8 +8,8 @@ const router = express.Router();
 router
   .route("/")
   /**
-   * @api {get} v1/admin/rate List Rates
-   * @apiDescription Get a list of rates
+   * @api {get} v1/
+   * @apiDescription
    * @apiVersion 1.0.0
    * @apiName ListUsers
    * @apiGroup Rate
