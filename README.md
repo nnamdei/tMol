@@ -8,7 +8,7 @@
  - No transpilers, just vanilla javascript
  - ES2017 latest features like Async/Await
  - CORS enabled
- - Uses [yarn](https://yarnpkg.com)
+ - Uses [npm](https://yarnpkg.com)
  - Express + MongoDB ([Mongoose](http://mongoosejs.com/))
  - Consistent coding styles with [editorconfig](http://editorconfig.org)
  - [Docker](https://www.docker.com/) support
@@ -54,52 +54,52 @@ cp .env.example .env
 ## Running Locally
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 ## Running in Production
 
 ```bash
-yarn start
+npm start
 ```
 
 ## Lint
 
 ```bash
 # lint code with ESLint
-yarn lint
+npm lint
 
 # try to fix ESLint errors
-yarn lint:fix
+npm lint:fix
 
 # lint and watch for changes
-yarn lint:watch
+npm lint:watch
 ```
 
 ## Test
 
 ```bash
 # run all tests with Mocha
-yarn test
+npm test
 
 # run unit tests
-yarn test:unit
+npm test:unit
 
 # run integration tests
-yarn test:integration
+npm test:integration
 
 # run all tests and watch for changes
-yarn test:watch
+npm test:watch
 
 # open nyc test coverage reports
-yarn coverage
+npm coverage
 ```
 
 ## Validate
 
 ```bash
 # run lint and tests
-yarn validate
+npm validate
 ```
 
 ## Logs
@@ -113,20 +113,20 @@ pm2 logs
 
 ```bash
 # generate and open api documentation
-yarn docs
+npm docs
 ```
 
 ## Docker
 
 ```bash
 # run container locally
-yarn docker:dev
+npm docker:dev
 
 # run container in production
-yarn docker:prod
+npm docker:prod
 
 # run tests
-yarn docker:test
+npm docker:test
 ```
 
 ## Deploy
@@ -146,17 +146,9 @@ nano deploy.sh
 Run deploy script:
 
 ```bash
-yarn deploy
-```
+npm deploy
 
-## Tutorials
- - [Create API Documentation Using Squarespace](https://selfaware.blog/home/2018/6/23/api-documentation)
-
-## Inspirations
-
- - [KunalKapadia/express-mongoose-es6-rest-api](https://github.com/KunalKapadia/express-mongoose-es6-rest-api)
- - [diegohaz/rest](https://github.com/diegohaz/rest)
 
 ## License
 
-[MIT License](README.md) - [Daniel Sousa](https://github.com/danielfsousa)
+[MIT License](README.md)
