@@ -1,6 +1,7 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable arrow-parens */
 const httpStatus = require("http-status");
-const { omit } = require("lodash");
+const Transaction = require("../models/transaction.model");
 const User = require("../models/user.model");
 const emailProvider = require("../services/emails/emailProvider");
 /**
@@ -33,7 +34,7 @@ exports.loggedIn = (req, res) => res.json(req.user.transform());
  * Get user list
  * @public
  */
-exports.list = async (req, res, next) => {
+exports.listUsers = async (req, res, next) => {
   try {
     console.log(req.query);
 
@@ -49,7 +50,7 @@ exports.list = async (req, res, next) => {
  * Create new user
  * @public
  */
-exports.create = async (req, res, next) => {
+exports.createUser = async (req, res, next) => {
   try {
     const user = new User(req.body);
     const savedUser = await user.save();
@@ -65,7 +66,7 @@ exports.create = async (req, res, next) => {
  * Update existing user
  * @public
  */
-exports.update = async (req, res, next) => {
+exports.updateUser = async (req, res, next) => {
   try {
     const { id } = req.user;
     const updatedUser = await User.findByIdAndUpdate(id, req.body, {
@@ -89,16 +90,76 @@ exports.update = async (req, res, next) => {
  * Delete user
  * @public
  */
-exports.remove = async (req, res, next) => {
+exports.removeUser = async (req, res, next) => {
   const { id } = req.params;
   try {
-    console.log(id, "HI");
-
     await User.findOneAndRemove(id);
     return res.status(httpStatus.OK).json({
       message: "User deleted",
     });
   } catch (error) {
     return next(error);
+  }
+};
+
+/**
+ * Get transaction list
+ * @public
+ */
+exports.listTransanction = async (req, res, next) => {
+  try {
+    console.log(req.query);
+
+    const transactions = await Transaction.list(req.query);
+    res.json(transactions);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Approve a transaction
+ * @public
+ */
+exports.approveTransaction = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const specificTransaction = await Transaction.findById(id);
+    if (
+      specificTransaction.status === "Pending" ||
+      specificTransaction.status === "Declined"
+    ) {
+      specificTransaction.status = "Approved";
+      await specificTransaction.save();
+      res.json({
+        message: "Transaction Approved",
+        specificTransaction,
+      });
+    }
+    throw new Error("Error");
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Reject a transaction
+ * @public
+ */
+exports.rejectTransaction = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const specificTransaction = await Transaction.findById(id);
+    if (specificTransaction.status === "Pending") {
+      specificTransaction.status = "Declined";
+      await specificTransaction.save();
+      res.json({
+        message: "Transaction Declined",
+        specificTransaction,
+      });
+    }
+    throw new Error("Transaction was already approved");
+  } catch (error) {
+    next(error);
   }
 };

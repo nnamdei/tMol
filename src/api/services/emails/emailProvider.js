@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 // verify connection configuration
 transporter.verify((error) => {
   if (error) {
-    console.log("error with email connection", error);
+    console.log("Error with email connection", error);
   } else {
     console.log("Email successful");
   }
