@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 const express = require("express");
 const controller = require("../../controllers/giftcard.controller");
-const { authorize, LOGGED_USER } = require("../../middlewares/auth");
+const { authorize, LOGGED_USER, ADMIN } = require("../../middlewares/auth");
 
 const router = express.Router();
 
@@ -31,8 +31,8 @@ router
 
   .get(controller.getAll)
 
-  .post(authorize(LOGGED_USER), controller.create);
+  .post(authorize(ADMIN), controller.create);
 
-router.route("/:id").delete(authorize(LOGGED_USER), controller.delete);
+router.route("/:id").delete(authorize(ADMIN), controller.delete);
 
 module.exports = router;
