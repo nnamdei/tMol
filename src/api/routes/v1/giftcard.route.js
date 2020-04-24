@@ -29,7 +29,7 @@ router
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
 
-  .get(authorize(LOGGED_USER), controller.getAll)
+  .get(controller.getAll)
 
   .post(authorize(LOGGED_USER), controller.create);
 
