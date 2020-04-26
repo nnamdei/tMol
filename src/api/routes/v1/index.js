@@ -5,7 +5,7 @@ const rateRoutes = require("./rate.route");
 const transactionRoutes = require("./transaction.route");
 const uploadRoute = require("./upload.route");
 const giftcardRoute = require("./giftcard.route");
-const { authorize, ADMIN, LOGGED_USER } = require("../../middlewares/auth");
+const bitcoinRoute = require("./bitcoin.route");
 
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.use("/docs", express.static("docs"));
 
 router.use("/admin", adminRoutes);
 router.use("/giftcard", giftcardRoute);
+router.use("/bitcoin", bitcoinRoute);
 router.use("/rates", rateRoutes);
 router.use("/auth", authRoutes);
 router.use("/transaction", transactionRoutes);
