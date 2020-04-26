@@ -110,7 +110,8 @@ transactionSchema.statics = {
       isNil
     );
 
-    return this.find(options).populate('user')
+    return this.find(options)
+      .populate("user")
       .sort({ createdAt: -1 })
       .skip(perPage * (page - 1))
       .limit(perPage)
