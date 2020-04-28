@@ -12,7 +12,6 @@ var serviceAccount = require("../key/truthx-63f51-firebase-adminsdk-4b5vq-ecd559
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://truthx-63f51.firebaseio.com"
 });
 
 const fcm = admin.messaging();
