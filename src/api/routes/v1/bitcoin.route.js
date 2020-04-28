@@ -7,7 +7,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(authorize(ADMIN), controller.get)
+  .get(controller.get)
   .post(authorize(ADMIN), controller.create);
 
 router.route("/:id").delete(authorize(ADMIN), controller.delete);

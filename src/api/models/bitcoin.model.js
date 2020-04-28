@@ -9,12 +9,12 @@ const roles = ["user", "admin"];
 
 const bitcoinSchema = new mongoose.Schema(
   {
-    account: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
+    account:
+    {
+      type: String,
+      required: true,
+    },
+
     rate: {
       type: String,
       required: true,
