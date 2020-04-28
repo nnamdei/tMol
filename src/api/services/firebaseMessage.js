@@ -27,7 +27,7 @@ exports.sendToDevice = async (token, payload) => {
   const fcmPayload = {
     notification: {
       title: `New ${payload.transactionType} Order!`,
-      body: `You have a new order Form ${payload.name} sold a `,
+      body: `You have a new order Form ${payload.name}. `,
       icon: 'your-icon-url',
       click_action: 'FLUTTER_NOTIFICATION_CLICK'
     }
