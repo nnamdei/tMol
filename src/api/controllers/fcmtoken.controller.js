@@ -1,22 +1,35 @@
 const httpStatus = require("http-status");
 const FcmToken = require("../models/fcmToken.model");
-
+var mongoose = require('mongoose');
 // Save token to db
 
 exports.create = async (req, res, next) => {
   try {
-    const { fcmtoken } = req.body;
-    const fcmToken = new FcmToken({
-      userId: req.user._id,
-      fcmtoken,
-    });
-    console.log(req);
+    const { fcmtoken, userId } = req.body;
+    let _id = mongoose.Types.ObjectId(userId)
+    let foundFcmtoken = await FcmToken.findOne({ userId: _id });
 
-    const newFcmToken = await fcmToken.save();
-    if (newFcmToken) {
+    if (!foundFcmtoken) {
+      const fcmToken = new FcmToken({
+        userId: _id,
+        fcmtoken,
+      });
+
+      await fcmToken.save();
       return res.status(httpStatus.CREATED).json({
-        message: "Token saved",
-        newFcmToken,
+        message: "Token Saved",
+      });
+
+    }
+    if (foundFcmtoken && foundFcmtoken.fcmtoken == fcmtoken) {
+      return res.status(httpStatus.OK).json({
+        message: "Token Still Active",
+      });
+    }
+    if (foundFcmtoken && foundFcmtoken.fcmtoken !== fcmtoken) {
+      await foundFcmtoken.updateOne({ fcmtoken }, { new: true })
+      return res.status(httpStatus.CREATED).json({
+        message: "Token Updated",
       });
     }
     throw new Error("Unsuccessful");

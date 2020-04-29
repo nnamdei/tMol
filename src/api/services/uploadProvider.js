@@ -5,18 +5,14 @@
 /* eslint-disable arrow-parens */
 const Transaction = require("../models/transaction.model");
 const User = require("../models/user.model");
-
 exports.uploadUserImage = async (req, res, next) => {
   try {
     const { url } = req.file;
-
-
     const updatedImage = await User.findByIdAndUpdate(req.user._id, { profileImageLink: url }, {
       useFindAndModify: false,
     });
-
-
     if (updatedImage) {
+
       return res.status(201).json({
         message: "Image saved",
         response: url,
@@ -49,6 +45,7 @@ exports.uploadTransactionImage = async (req, res, next) => {
     });
 
     const savedImage = await imageUrl.save();
+
     return res.status(201).json({
       message: "Image saved",
       savedImage,

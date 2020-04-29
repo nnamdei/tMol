@@ -1,14 +1,8 @@
-/**
- *  THIS HAS NOT BEEN SETUP COMPLETELY AS 
- *  THE DEPENDENCY IS YET TO BE ADDED TO THE APP
- *  @file   [truthx-63f51-firebase-adminsdk-4b5vq-ecd5597b4f.json]
- * 
- *  IS YET TO BE ADDED ALSO
- */
-
+require('dotenv-safe')
+const FcmToken = require('../models/fcmToken.model')
 const admin = require('firebase-admin');
 
-var serviceAccount = require("../key/truthx-63f51-firebase-adminsdk-4b5vq-ecd5597b4f.json");
+var serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -20,9 +14,7 @@ const fcm = admin.messaging();
  * @param {Map} payload - The payload
  * @argument payload ={   transactionType,  name}
  */
-exports.sendToDevice = async (token, payload) => {
-
-
+exports.sendToAdminDevice = async (token, payload) => {
   const fcmPayload = {
     notification: {
       title: `New ${payload.transactionType} Order!`,
@@ -31,9 +23,19 @@ exports.sendToDevice = async (token, payload) => {
       click_action: 'FLUTTER_NOTIFICATION_CLICK'
     }
   };
-
   return fcm.sendToDevice(token, fcmPayload);
-
 }
 
 
+
+exports.getFcmTokens = async (ROLE) => {
+  let finalList = [];
+  let foundFcmTokens = await FcmToken.find().populate('userId')
+  let filterList = foundFcmTokens.filter((data) => {
+    return data.userId.role == ROLE;
+  })
+  filterList.forEach(item => {
+    finalList.push(item.fcmtoken);
+  })
+  return finalList;
+}
