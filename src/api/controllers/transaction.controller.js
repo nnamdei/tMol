@@ -1,6 +1,6 @@
 const httpStatus = require("http-status");
 const Transaction = require("../models/transaction.model");
-
+const { getFcmTokens, sendToAdminDevice } = require('../services/firebaseMessage')
 // console.log("HI");
 
 // /**
@@ -50,6 +50,14 @@ exports.create = async (req, res, next) => {
     });
     const savedTransactionDetails = await transactionDetails.save();
     res.status(httpStatus.CREATED);
+    let tokenList = await getFcmTokens("admin")
+    if (tokenList.length !== 0) {
+      await sendToAdminDevice(tokenList, {
+        transactionType: savedTransactionDetails.cardName,
+        name: req.user.name
+      })
+    }
+
     return res.json(savedTransactionDetails);
   } catch (error) {
     return next(error, "Error");
