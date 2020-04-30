@@ -38,4 +38,7 @@ module.exports = {
     email: process.env.ADMIN_EMAIL2,
     password: process.env.ADMIN_PASSWORD2,
   },
+  firebaseAdmin: {
+    credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS
+  }
 };
