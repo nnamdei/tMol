@@ -51,7 +51,7 @@ exports.sendWelcomeEmail = async (user) => {
     .catch(() => console.log("error sending welcome message email"));
 };
 
-exports.sendPasswordReset = async (passwordResetObject) => {
+exports.sendPasswordReset = async (user, code) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
@@ -66,13 +66,12 @@ exports.sendPasswordReset = async (passwordResetObject) => {
     .send({
       template: "passwordReset",
       message: {
-        to: passwordResetObject.userEmail,
+        to: user.email,
       },
       locals: {
         productName: "TruthX",
-        // passwordResetUrl should be a URL to your app that displays a view where they
-        // can enter a new password along with passing the resetToken in the params
-        passwordResetUrl: `https://your-app/new-password/view?resetToken=${passwordResetObject.resetToken}`,
+        name: user.name,
+        code,
       },
     })
     .catch(() => console.log("error sending password reset email"));
