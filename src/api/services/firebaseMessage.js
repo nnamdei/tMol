@@ -14,15 +14,28 @@ const fcm = admin.messaging();
  * @param {Map} payload - The payload
  * @argument payload ={   transactionType,  name}
  */
-exports.sendToAdminDevice = async (token, payload) => {
-  const fcmPayload = {
-    notification: {
-      title: `New ${payload.transactionType} Order!`,
-      body: `You have a new order Form ${payload.name}. `,
-      icon: "your-icon-url",
-      click_action: "FLUTTER_NOTIFICATION_CLICK",
-    },
-  };
+exports.sendToDevice = async (token, payload, ROLE) => {
+  let fcmPayload;
+  if (ROLE == "user") {
+    fcmPayload = {
+      notification: {
+        title: `${payload.title}`,
+        body: ` ${payload.content}. `,
+        icon: "your-icon-url",
+        click_action: "FLUTTER_NOTIFICATION_CLICK",
+      },
+    };
+  } else {
+    fcmPayload = {
+      notification: {
+        title: `New ${payload.transactionType} Order!`,
+        body: `You have a new order Form ${payload.name}. `,
+        icon: "your-icon-url",
+        click_action: "FLUTTER_NOTIFICATION_CLICK",
+      },
+    };
+  }
+
   return fcm.sendToDevice(token, fcmPayload);
 };
 
