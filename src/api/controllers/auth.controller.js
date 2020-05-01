@@ -3,10 +3,12 @@ const User = require("../models/user.model");
 const RefreshToken = require("../models/refreshToken.model");
 const PasswordResetToken = require("../models/passwordResetToken.model");
 const moment = require("moment-timezone");
-const { jwtExpirationInterval } = require("../../config/vars");
+const { jwtExpirationInterval, env } = require("../../config/vars");
 const { adminDetails, adminDetails2 } = require("../../config/vars");
 const APIError = require("../utils/APIError");
 const emailProvider = require("../services/emails/emailProvider");
+const crypto = require("crypto");
+const bcrypt = require("bcryptjs");
 
 /**
  * Returns a formated object with tokens
@@ -109,17 +111,25 @@ exports.refresh = async (req, res, next) => {
 };
 
 exports.sendPasswordReset = async (req, res, next) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ email }).exec();
+  const { email } = req.body;
+  const code = crypto.randomBytes(4).toString("hex");
+  const rounds = env === "test" ? 1 : 10;
+  const hash = await bcrypt.hash(code, rounds);
+  const password = hash;
 
-    if (user) {
-      const passwordResetObj = await PasswordResetToken.generate(user);
-      emailProvider.sendPasswordReset(passwordResetObj);
+  try {
+    const updated = await User.findOneAndUpdate(
+      { email },
+      { $set: { password } },
+      { new: true }
+    );
+    if (updated) {
+      emailProvider.sendPasswordReset(updated, code);
       res.status(httpStatus.OK);
       return res.json({
         message: "Success",
-        passwordResetObj,
+        updated,
+        code,
       });
     }
     throw new APIError({
