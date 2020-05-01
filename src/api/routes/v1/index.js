@@ -7,6 +7,7 @@ const uploadRoute = require("./upload.route");
 const giftcardRoute = require("./giftcard.route");
 const bitcoinRoute = require("./bitcoin.route");
 const fcmtokenRoute = require("./fcmtoken.route");
+const notificationRoute = require("./notification.route");
 
 const router = express.Router();
 
@@ -29,5 +30,6 @@ router.use("/auth", authRoutes);
 router.use("/transaction", transactionRoutes);
 router.use("/image", uploadRoute);
 router.use("/fcmtoken", fcmtokenRoute);
+router.use("/notification", notificationRoute);
 
 module.exports = router;
