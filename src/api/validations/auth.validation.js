@@ -42,11 +42,10 @@ module.exports = {
   },
 
   // POST /v1/auth/password-reset
-  passwordReset: {
+  updatePassword: {
     body: {
-      email: Joi.string().email().required(),
-      password: Joi.string().required().min(6).max(128),
-      resetToken: Joi.string().required(),
+      oldPassword: Joi.string().required().min(6).max(128),
+      newPassword: Joi.string().required().min(6).max(128),
     },
   },
 };
