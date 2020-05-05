@@ -5,6 +5,7 @@ const rateRoutes = require("./rate.route");
 const transactionRoutes = require("./transaction.route");
 const uploadRoute = require("./upload.route");
 const giftcardRoute = require("./giftcard.route");
+const subcategoryRoute = require("./subcategory.route");
 const bitcoinRoute = require("./bitcoin.route");
 const fcmtokenRoute = require("./fcmtoken.route");
 const notificationRoute = require("./notification.route");
@@ -31,5 +32,6 @@ router.use("/transaction", transactionRoutes);
 router.use("/image", uploadRoute);
 router.use("/fcmtoken", fcmtokenRoute);
 router.use("/notification", notificationRoute);
+router.use("/giftcard/subcategory", subcategoryRoute);
 
 module.exports = router;
