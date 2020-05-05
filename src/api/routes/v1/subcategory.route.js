@@ -6,5 +6,6 @@ const { authorize, ADMIN } = require("../../middlewares/auth");
 const router = express.Router();
 
 router.route("/").post(authorize(ADMIN), controller.create);
+router.route("/").patch(authorize(ADMIN), controller.update);
 
 module.exports = router;

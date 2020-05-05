@@ -4,30 +4,58 @@ const GiftCard = require("../models/giftcard.model");
 const mongoose = require("mongoose");
 
 exports.create = async (req, res, next) => {
-  const { userId, title, rate } = req.body;
-  const _id = mongoose.Types.ObjectId(userId);
+  const { cardId, title, rate } = req.body;
+  const _id = mongoose.Types.ObjectId(cardId);
   try {
-    const subgiftcard = new CardCategory({
-      title,
-      rate,
-    });
-
-    const newSubgiftcard = await subgiftcard.save();
-    if (newSubgiftcard) {
-      res.status(httpStatus.CREATED).json({
-        message: "Subcategory added",
-        newSubgiftcard,
+    const foundGiftcard = await GiftCard.findById(_id)
+    if (foundGiftcard) {
+      const subgiftcard = new CardCategory({
+        title,
+        rate,
       });
-      return GiftCard.findById(_id)
-        .populate("cardCategory")
-        .exec((err, card) => {
-          if (err) console.log(err);
-          else console.log(card);
-        });
+     
+      if(subgiftcard){
+         await subgiftcard.save();
+        
+          await foundGiftcard.cardCategory.push(subgiftcard._id);
+      await foundGiftcard.save();
+         return res.status(httpStatus.CREATED).json({
+        message: "Subcategory added",
+        newSubCard: subgiftcard,
+      });
+      }else{
+       throw new Error("Unsuccessful");
+      
+      }
+    
+
+     
     }
+
+    throw new Error("Unsuccessful");
+
   } catch (error) {
     return next(error, "Error");
   }
 };
 
-// 5eaba6689a094a18c418cca0
+exports.update = async (req, res, next) => {
+
+  const { subcategoryId, rate } = req.body;
+  const _id = mongoose.Types.ObjectId(subcategoryId);
+
+  try {
+    let foundSubcategory = await CardCategory.findByIdAndUpdate(_id, { rate }, { new: true });
+    if (foundSubcategory) {
+
+      return res.status(httpStatus.CREATED).json({
+        message: "Subcategory updated",
+        updatedSubcategory: foundSubcategory,
+      });
+    }
+    throw new Error("Unsuccessful");
+
+  } catch (error) {
+    return next(error, "Error");
+  }
+}
