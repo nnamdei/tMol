@@ -13,14 +13,23 @@ exports.create = async (req, res, next) => {
         title,
         rate,
       });
-      await subgiftcard.save();
-      await foundGiftcard.cardCategory.push(subgiftcard._id);
+     
+      if(subgiftcard){
+         await subgiftcard.save();
+        
+          await foundGiftcard.cardCategory.push(subgiftcard._id);
       await foundGiftcard.save();
-
-      return res.status(httpStatus.CREATED).json({
+         return res.status(httpStatus.CREATED).json({
         message: "Subcategory added",
         newSubCard: subgiftcard,
       });
+      }else{
+       throw new Error("Unsuccessful");
+      
+      }
+    
+
+     
     }
 
     throw new Error("Unsuccessful");
