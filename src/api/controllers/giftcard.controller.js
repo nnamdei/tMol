@@ -4,7 +4,7 @@ const GiftCard = require("../models/giftcard.model");
 
 exports.getAll = async (req, res, next) => {
   try {
-    const giftCards = await GiftCard.find();
+    const giftCards = await GiftCard.find().populate('cardCategory');
     if (giftCards) {
       return res.status(httpStatus.OK).json({
         giftCards,
@@ -19,10 +19,10 @@ exports.getAll = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { card, cardCategory, rate, image } = req.body;
+    const { card, rate, image } = req.body;
     const giftCard = new GiftCard({
       card,
-      cardCategory,
+      //cardCategory,
       // rate,
       image,
     });
