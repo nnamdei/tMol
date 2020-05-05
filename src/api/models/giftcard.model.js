@@ -22,14 +22,8 @@ const giftcardSchema = new mongoose.Schema(
     },
     cardCategory: [
       {
-        title: {
-          type: String,
-          required: true,
-        },
-        rate: {
-          type: Number,
-          required: true,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "CardCategory",
       },
     ],
     role: {
