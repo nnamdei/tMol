@@ -23,7 +23,7 @@ exports.create = async (req, res, next) => {
       address,
       smallest,
       small,
-      meduim,
+      medium,
       large,
       larger,
       largest,
@@ -32,7 +32,7 @@ exports.create = async (req, res, next) => {
       !address ||
       !smallest ||
       !small ||
-      !meduim ||
+      !medium ||
       !large ||
       !larger ||
       !largest
@@ -45,7 +45,7 @@ exports.create = async (req, res, next) => {
     }
     const bitcoinDetails = new Bitcoin({
       address,
-      rates: { smallest, small, meduim, large, larger, largest },
+      rates: { smallest, small, medium, large, larger, largest },
     });
 
     const newBitcoinDetails = await bitcoinDetails.save();
