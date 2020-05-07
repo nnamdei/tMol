@@ -19,10 +19,11 @@ exports.get = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { account, rate } = req.body;
+    const { address, little, meduim, large } = req.body;
+
     const bitcoinDetails = new Bitcoin({
-      account,
-      rate,
+      address,
+      rates: [{ little, meduim, large }],
     });
 
     const newBitcoinDetails = await bitcoinDetails.save();
