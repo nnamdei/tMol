@@ -21,9 +21,10 @@ exports.create = async (req, res, next) => {
   try {
     const { address, little, meduim, large } = req.body;
 
+    await Bitcoin.collection.drop()
     const bitcoinDetails = new Bitcoin({
       address,
-      rates: [{ little, meduim, large }],
+      rates: { little, meduim, large },
     });
 
     const newBitcoinDetails = await bitcoinDetails.save();
