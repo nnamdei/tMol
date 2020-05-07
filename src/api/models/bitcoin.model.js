@@ -15,9 +15,12 @@ const bitcoinSchema = new mongoose.Schema(
     },
     rates: [
       {
-        little: { type: Number },
+        smallest: { type: Number },
+        small: { type: Number },
         meduim: { type: Number },
         large: { type: Number },
+        larger: { type: Number },
+        largest: { type: Number },
       },
     ],
     role: {
