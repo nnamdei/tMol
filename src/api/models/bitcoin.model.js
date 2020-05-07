@@ -13,16 +13,15 @@ const bitcoinSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    rates: [
-      {
-        smallest: { type: Number },
-        small: { type: Number },
-        meduim: { type: Number },
-        large: { type: Number },
-        larger: { type: Number },
-        largest: { type: Number },
-      },
-    ],
+    rates: {
+      smallest: { type: Number, required: true },
+      small: { type: Number, required: true },
+      meduim: { type: Number, required: true },
+      large: { type: Number, required: true },
+      larger: { type: Number, required: true },
+      largest: { type: Number, required: true },
+    },
+
     role: {
       type: String,
       enum: roles,

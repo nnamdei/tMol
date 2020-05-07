@@ -19,11 +19,33 @@ exports.get = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { address, little, meduim, large } = req.body;
-
+    const {
+      address,
+      smallest,
+      small,
+      meduim,
+      large,
+      larger,
+      largest,
+    } = req.body;
+    if (
+      !address ||
+      !smallest ||
+      !small ||
+      !meduim ||
+      !large ||
+      !larger ||
+      !largest
+    ) {
+      throw new Error("Unsuccessful");
+    }
+    const foundbitcoin = await Bitcoin.find();
+    if (foundbitcoin.length > 0) {
+      await Bitcoin.collection.drop();
+    }
     const bitcoinDetails = new Bitcoin({
       address,
-      rates: [{ little, meduim, large }],
+      rates: { smallest, small, meduim, large, larger, largest },
     });
 
     const newBitcoinDetails = await bitcoinDetails.save();
