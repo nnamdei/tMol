@@ -61,6 +61,57 @@ exports.create = async (req, res, next) => {
   }
 };
 
+/**
+ * Update bitcoin details
+ * @private
+ */
+exports.update = async (req, res, next) => {
+  const {
+    name,
+    address,
+    smallest,
+    small,
+    medium,
+    large,
+    larger,
+    largest,
+  } = req.body;
+
+  try {
+    const { id } = req.query;
+    if (
+      !name ||
+      !address ||
+      !smallest ||
+      !small ||
+      !medium ||
+      !large ||
+      !larger ||
+      !largest
+    ) {
+      throw new Error("Unsuccessful");
+    }
+    const updated = await Bitcoin.findByIdAndUpdate(
+      id,
+      { name, address, smallest, small, medium, large, larger, largest },
+      {
+        useFindAndModify: false,
+        new: true,
+      }
+    );
+
+    if (updated) {
+      return res.status(httpStatus.CREATED).json({
+        message: "Details updated",
+        updated,
+      });
+    }
+    throw new Error("Update unsuccesful");
+  } catch (error) {
+    return next(error);
+  }
+};
+
 exports.delete = async (req, res, next) => {
   const { id } = req.params;
   try {
