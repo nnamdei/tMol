@@ -20,6 +20,7 @@ exports.get = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     const {
+      name,
       address,
       smallest,
       small,
@@ -29,6 +30,7 @@ exports.create = async (req, res, next) => {
       largest,
     } = req.body;
     if (
+      !name ||
       !address ||
       !smallest ||
       !small ||
@@ -39,11 +41,9 @@ exports.create = async (req, res, next) => {
     ) {
       throw new Error("Unsuccessful");
     }
-    const foundbitcoin = await Bitcoin.find();
-    if (foundbitcoin.length > 0) {
-      await Bitcoin.collection.drop();
-    }
+
     const bitcoinDetails = new Bitcoin({
+      name,
       address,
       rates: { smallest, small, medium, large, larger, largest },
     });
