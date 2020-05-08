@@ -8,7 +8,8 @@ const router = express.Router();
 router
   .route("/")
   .get(controller.get)
-  .post(authorize(ADMIN), controller.create);
+  .post(authorize(ADMIN), controller.create)
+  .patch(authorize(ADMIN), controller.update);
 
 router.route("/:id").delete(authorize(ADMIN), controller.delete);
 
