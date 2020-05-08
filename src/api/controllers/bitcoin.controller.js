@@ -78,7 +78,7 @@ exports.update = async (req, res, next) => {
   } = req.body;
 
   try {
-    const { id } = req.query;
+    const { id } = req.params;
     if (
       !name ||
       !address ||
