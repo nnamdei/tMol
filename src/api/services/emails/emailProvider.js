@@ -8,19 +8,18 @@ const Email = require("email-templates");
 // such as an email service API or nodemailer-sendgrid-transport
 
 const transporter = nodemailer.createTransport({
-  port: emailConfig.port,
-  host: emailConfig.host,
+  port: 587,
+  host: "smtp.ethereal.email",
   auth: {
-    user: emailConfig.username,
-    pass: emailConfig.password,
+    user: "romaine16@ethereal.email",
+    pass: "65SgbpMfyXpETy3Nn7",
   },
-  secure: false, // upgrades later with STARTTLS -- change this based on the PORT
 });
 
 // verify connection configuration
 transporter.verify((error) => {
   if (error) {
-    console.log("Error with email connection", error);
+    console.log(error);
   } else {
     console.log("Email successful");
   }
