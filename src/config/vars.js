@@ -24,6 +24,10 @@ module.exports = {
     port: process.env.EMAIL_PORT,
     username: process.env.EMAIL_USERNAME,
     password: process.env.EMAIL_PASSWORD,
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: process.env.ACCESS_TOKEN,
   },
   cloudinaryConfig: {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -39,6 +43,6 @@ module.exports = {
     password: process.env.ADMIN_PASSWORD2,
   },
   firebaseAdmin: {
-    credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS
-  }
+    credentials: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+  },
 };
