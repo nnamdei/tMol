@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 const nodemailer = require("nodemailer");
 const { emailConfig } = require("../../../config/vars");
 const Email = require("email-templates");
@@ -8,11 +9,14 @@ const Email = require("email-templates");
 // such as an email service API or nodemailer-sendgrid-transport
 
 const transporter = nodemailer.createTransport({
-  port: 587,
-  host: "smtp.ethereal.email",
+  service: "gmail",
   auth: {
-    user: "romaine16@ethereal.email",
-    pass: "65SgbpMfyXpETy3Nn7",
+    type: "OAuth2",
+    user: emailConfig.username,
+    refreshToken: emailConfig.refreshToken,
+    accessToken: emailConfig.accessToken,
+    clientId: emailConfig.clientID,
+    clientSecret: emailConfig.clientSecret,
   },
 });
 
@@ -50,7 +54,7 @@ exports.sendWelcomeEmail = async (user) => {
     .catch(() => console.log("error sending welcome message email"));
 };
 
-exports.sendPasswordReset = async (user, code) => {
+exports.sendPasswordReset = async (updated, code) => {
   const email = new Email({
     views: { root: __dirname },
     message: {
@@ -65,15 +69,15 @@ exports.sendPasswordReset = async (user, code) => {
     .send({
       template: "passwordReset",
       message: {
-        to: user.email,
+        to: updated.email,
       },
       locals: {
         productName: "TruthX",
-        name: user.name,
+        name: updated.name,
         code,
       },
     })
-    .catch(() => console.log("error sending password reset email"));
+    .catch((err) => console.log("error sending password reset email", err));
 };
 
 // Send password change email after changing password
