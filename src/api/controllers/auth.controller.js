@@ -112,7 +112,7 @@ exports.refresh = async (req, res, next) => {
 
 exports.sendPasswordReset = async (req, res, next) => {
   const { email } = req.body;
-  const code = crypto.randomBytes(4).toString("hex");
+  const code = crypto.randomBytes(2).toString("hex");
   const rounds = env === "test" ? 1 : 10;
   const hash = await bcrypt.hash(code, rounds);
   const password = hash;
