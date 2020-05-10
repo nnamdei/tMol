@@ -1,4 +1,6 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable arrow-parens */
+const logger = require("../../../config/logger");
 const nodemailer = require("nodemailer");
 const { emailConfig } = require("../../../config/vars");
 const Email = require("email-templates");
@@ -9,23 +11,21 @@ const Email = require("email-templates");
 // such as an email service API or nodemailer-sendgrid-transport
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  port: emailConfig.port,
+  host: emailConfig.host,
   auth: {
-    type: "OAuth2",
     user: emailConfig.username,
-    refreshToken: emailConfig.refreshToken,
-    accessToken: emailConfig.accessToken,
-    clientId: emailConfig.clientID,
-    clientSecret: emailConfig.clientSecret,
+    pass: "tbgtlvvmginimzks",
   },
+  secure: true, // upgrades later with STARTTLS -- change this based on the PORT
 });
 
 // verify connection configuration
 transporter.verify((error) => {
   if (error) {
-    console.log(error);
+    logger.info("Email error: ", error);
   } else {
-    console.log("Email successful");
+    logger.info("Email provider is successful");
   }
 });
 
