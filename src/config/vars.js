@@ -24,6 +24,7 @@ module.exports = {
     port: process.env.EMAIL_PORT,
     username: process.env.EMAIL_USERNAME,
     password: process.env.EMAIL_PASSWORD,
+    sgMailKey: process.env.SENDGRID_API_KEY,
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     refreshToken: process.env.REFRESH_TOKEN,
