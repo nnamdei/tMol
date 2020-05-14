@@ -51,7 +51,7 @@ exports.sendWelcomeEmail = async (user) => {
         name: user.name,
       },
     })
-    .catch(() => console.log("error sending welcome message email"));
+    .catch((err) => logger.info("error sending welcome message email", err));
 };
 
 exports.sendPasswordReset = async (updated, code) => {
