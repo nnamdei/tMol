@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
   port: emailConfig.port,
   host: emailConfig.host,
   auth: {
-    user: emailConfig.username,
-    pass: "tbgtlvvmginimzks",
+    user: "truthexchanges@gmail.com",
+    pass: "lhwjjbnworhwzlmj",
   },
   secure: true, // upgrades later with STARTTLS -- change this based on the PORT
 });
