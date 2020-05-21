@@ -46,20 +46,19 @@ exports.delete = async (req, res, next) => {
   const { id } = req.params;
   try {
     const giftCard = await GiftCard.findById(id);
+    console.log(giftCard);
     const subcategory = giftCard.cardCategory;
-
-    for (let index = 0; index < subcategory.length; index++) {
-      await CardCategory.findByIdAndRemove({ _id: subcategory[index] });
+    for (let index = subcategory.length; index > 0; index--) {
+      subcategory.pop();
     }
+    await giftCard.save();
+    console.log(giftCard);
 
-    await giftCard.remove();
-
-    return res.status(httpStatus.OK).json({ message: "Successful" });
+    return res.status(httpStatus.OK).json(giftCard);
   } catch (error) {
     return res.status(500).json({
-      message: "Unsuccessful",
+      message: "Unsuccesful",
       error: error.message,
-      subcategory
     });
   }
 };
