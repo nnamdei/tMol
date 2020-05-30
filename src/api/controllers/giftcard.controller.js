@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-plusplus */
 /* eslint-disable consistent-return */
 const httpStatus = require("http-status");
@@ -59,7 +61,7 @@ exports.delete = async (req, res, next) => {
     return res.status(500).json({
       message: "Unsuccessful",
       error: error.message,
-      subcategory
+      subcategory,
     });
   }
 };
