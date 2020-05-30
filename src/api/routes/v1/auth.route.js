@@ -5,7 +5,6 @@ const services = require("../../services/updateBankDetails");
 const servicePassword = require("../../services/updatePassword");
 const { authorize, LOGGED_USER } = require("../../middlewares/auth");
 
-const oAuthLogin = require("../../middlewares/auth").oAuth;
 const {
   login,
   register,
