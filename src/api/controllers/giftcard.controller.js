@@ -1,10 +1,14 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-plusplus */
 /* eslint-disable consistent-return */
 const httpStatus = require("http-status");
+const CardCategory = require("../models/cardcategory.model");
 const GiftCard = require("../models/giftcard.model");
 
 exports.getAll = async (req, res, next) => {
   try {
-    const giftCards = await GiftCard.find().populate('cardCategory');
+    const giftCards = await GiftCard.find().populate("cardCategory");
     if (giftCards) {
       return res.status(httpStatus.OK).json({
         giftCards,
@@ -22,7 +26,7 @@ exports.create = async (req, res, next) => {
     const { card, rate, image } = req.body;
     const giftCard = new GiftCard({
       card,
-      //cardCategory,
+      // cardCategory,
       // rate,
       image,
     });
@@ -43,12 +47,21 @@ exports.create = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await GiftCard.findOneAndRemove(id);
-    return res.status(httpStatus.OK).end();
+    const giftCard = await GiftCard.findById(id);
+    const subcategory = giftCard.cardCategory;
+
+    for (let index = 0; index < subcategory.length; index++) {
+      await CardCategory.findByIdAndRemove({ _id: subcategory[index] });
+    }
+
+    await giftCard.remove();
+
+    return res.status(httpStatus.OK).json({ message: "Successful" });
   } catch (error) {
     return res.status(500).json({
-      message: "Unsuccesful",
+      message: "Unsuccessful",
       error: error.message,
+      subcategory,
     });
   }
 };

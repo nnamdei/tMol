@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
     phone_number: {
       type: Number,
       required: true,
-      minlength: 11,
+      minlength: 10,
       maxlength: 11,
     },
     accountName: {
