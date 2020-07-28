@@ -26,7 +26,7 @@ const giftcardSchema = new mongoose.Schema(
       },
     ],
     isAvailable: {
-      type: String,
+      type: Boolean,
       default: true,
     },
     role: {
