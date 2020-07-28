@@ -93,7 +93,7 @@ exports.update = async (req, res, next) => {
     }
     const updated = await Bitcoin.findByIdAndUpdate(
       id,
-      { name, address, smallest, small, medium, large, larger, largest },
+      { name, address, rates: { smallest, small, medium, large, larger, largest } },
       {
         useFindAndModify: false,
         new: true,
