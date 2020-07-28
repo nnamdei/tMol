@@ -9,7 +9,10 @@ const cardCategorySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-
+  isAvailable: {
+    type: String,
+    default: true,
+  },
   card: { type: mongoose.Schema.ObjectId, ref: "Giftcard" },
 });
 

@@ -25,6 +25,10 @@ const giftcardSchema = new mongoose.Schema(
         ref: "CardCategory",
       },
     ],
+    isAvailable: {
+      type: String,
+      default: true,
+    },
     role: {
       type: String,
       enum: roles,

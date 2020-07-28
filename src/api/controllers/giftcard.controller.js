@@ -44,6 +44,31 @@ exports.create = async (req, res, next) => {
   }
 };
 
+exports.available = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const available = await GiftCard.findByIdAndUpdate(
+      id,
+      { isAvailable: false },
+      {
+        useFindAndModify: false,
+        new: true,
+      }
+    );
+    if (available) {
+      return res.status(httpStatus.CREATED).json({
+        message: "Details updated",
+        available,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Unsuccesful",
+      error: error.message,
+    });
+  }
+};
+
 exports.delete = async (req, res, next) => {
   const { id } = req.params;
   try {
