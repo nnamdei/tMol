@@ -59,14 +59,10 @@ exports.update = async (req, res, next) => {
 exports.available = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const available = await CardCategory.findByIdAndUpdate(
-      id,
-      { isAvailable: false },
-      {
-        useFindAndModify: false,
-        new: true,
-      }
-    );
+    const available = await CardCategory.findById(id);
+    await available.updateOne({ isAvailable: !available.isAvailable }, { useFindAndModify: false, new: true, });
+    await available.save();
+
     if (available) {
       return res.status(httpStatus.CREATED).json({
         message: "Details updated",
