@@ -42,6 +42,9 @@ const transactionSchema = new mongoose.Schema(
     comment: {
       type: String,
     },
+    remark: {
+      type: String,
+    },
     imageLink: {
       type: Array,
     },

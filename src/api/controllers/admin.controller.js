@@ -36,8 +36,6 @@ exports.loggedIn = (req, res) => res.json(req.user.transform());
  */
 exports.listUsers = async (req, res, next) => {
   try {
-    console.log(req.query);
-
     const users = await User.list(req.query);
     const transformedUsers = users.map((user) => user.transform());
     res.json(transformedUsers);
@@ -124,12 +122,14 @@ exports.listTransanction = async (req, res, next) => {
 exports.approveTransaction = async (req, res, next) => {
   try {
     const { id } = req.query;
+    const { remark } = req.body;
     const specificTransaction = await Transaction.findById(id);
     if (
       specificTransaction.status === "Pending" ||
       specificTransaction.status === "Declined"
     ) {
       specificTransaction.status = "Approved";
+      specificTransaction.remark = remark;
       await specificTransaction.save();
       res.json({
         message: "Transaction Approved",
@@ -149,8 +149,10 @@ exports.approveTransaction = async (req, res, next) => {
 exports.rejectTransaction = async (req, res, next) => {
   try {
     const { id } = req.query;
+    const { remark } = req.body;
     const specificTransaction = await Transaction.findById(id);
     if (specificTransaction.status === "Pending") {
+      specificTransaction.remark = remark;
       specificTransaction.status = "Declined";
       await specificTransaction.save();
       res.json({
