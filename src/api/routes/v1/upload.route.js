@@ -23,6 +23,14 @@ router
   );
 
 router
+  .route("/transaction/remark")
+  .post(
+    authorize(ADMIN),
+    middleware.parser.single("file"),
+    service.uploadRemarkImage
+  );
+
+router
   .route("/user")
   /**
    * @api {get} v1/image Upload image for User

@@ -5,14 +5,18 @@
 /* eslint-disable arrow-parens */
 const Transaction = require("../models/transaction.model");
 const User = require("../models/user.model");
+
 exports.uploadUserImage = async (req, res, next) => {
   try {
     const { url } = req.file;
-    const updatedImage = await User.findByIdAndUpdate(req.user._id, { profileImageLink: url }, {
-      useFindAndModify: false,
-    });
+    const updatedImage = await User.findByIdAndUpdate(
+      req.user._id,
+      { profileImageLink: url },
+      {
+        useFindAndModify: false,
+      }
+    );
     if (updatedImage) {
-
       return res.status(201).json({
         message: "Image saved",
         response: url,
@@ -50,6 +54,28 @@ exports.uploadTransactionImage = async (req, res, next) => {
       message: "Image saved",
       savedImage,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.uploadRemarkImage = async (req, res, next) => {
+  try {
+    const { url } = req.file;
+    const uploadedImage = await Transaction.findByIdAndUpdate(
+      req.user._id,
+      { remarkImageLink: url },
+      {
+        useFindAndModify: false,
+      }
+    );
+    if (uploadedImage) {
+      return res.status(201).json({
+        message: "Image sent",
+        response: url,
+      });
+    }
+    throw new Error("Unable to upload image");
   } catch (error) {
     next(error);
   }
