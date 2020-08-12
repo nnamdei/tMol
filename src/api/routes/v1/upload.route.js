@@ -23,8 +23,8 @@ router
   );
 
 router
-  .route("/transaction/remark")
-  .post(
+  .route("/transaction/remark/:id")
+  .patch(
     authorize(ADMIN),
     middleware.parser.single("file"),
     service.uploadRemarkImage

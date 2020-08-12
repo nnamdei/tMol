@@ -60,9 +60,10 @@ exports.uploadTransactionImage = async (req, res, next) => {
 };
 
 exports.uploadRemarkImage = async (req, res, next) => {
+  console.log(req.file);
   try {
     const { url } = req.file;
-    const uploadedImage = await Transaction.findByIdAndUpdate(
+    const uploadedImage = await Transaction.findOneAndUpdate(
       req.params._id,
       { remarkImageLink: url },
       {
