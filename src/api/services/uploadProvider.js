@@ -63,7 +63,7 @@ exports.uploadRemarkImage = async (req, res, next) => {
   try {
     const { url } = req.file;
     const uploadedImage = await Transaction.findByIdAndUpdate(
-      req.user._id,
+      req.params._id,
       { remarkImageLink: url },
       {
         useFindAndModify: false,
