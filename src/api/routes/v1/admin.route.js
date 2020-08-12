@@ -16,7 +16,7 @@ router
   .get(authorize(ADMIN), validate(listUsers), controller.listUsers)
   .post(authorize(ADMIN), validate(createUser), controller.createUser);
 
-router.route("/user/:id").delete(authorize(ADMIN), controller.removeUser);
+router.route("/user").delete(authorize(ADMIN), controller.removeUser);
 
 router.route("/profile").patch(authorize(ADMIN), controller.updateUser);
 
