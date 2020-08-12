@@ -89,7 +89,7 @@ exports.updateUser = async (req, res, next) => {
  * @public
  */
 exports.removeUser = async (req, res, next) => {
-  const { id } = req.params;
+  const { id } = req.user;
   try {
     await User.findOneAndRemove(id);
     return res.status(httpStatus.OK).json({
