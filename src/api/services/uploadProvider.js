@@ -60,16 +60,17 @@ exports.uploadTransactionImage = async (req, res, next) => {
 };
 
 exports.uploadRemarkImage = async (req, res, next) => {
-  console.log(req.file);
   try {
     const { url } = req.file;
-    const uploadedImage = await Transaction.findOneAndUpdate(
-      req.params._id,
-      { remarkImageLink: url },
-      {
-        useFindAndModify: false,
-      }
-    );
+
+    const uploadedImage = await Transaction.findById(req.params.id);
+    if (!uploadedImage) {
+      throw new Error("Unable to upload image");
+    }
+
+    uploadedImage.remarkImageLink = url;
+    await uploadedImage.save();
+    console.log(uploadedImage.remarkImageLink);
     if (uploadedImage) {
       return res.status(201).json({
         message: "Image sent",
