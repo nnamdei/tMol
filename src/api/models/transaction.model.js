@@ -103,7 +103,7 @@ transactionSchema.statics = {
    */
   list({
     page = 1,
-    perPage = 30,
+    perPage = 100,
     cardName,
     subCategory,
     amount,
@@ -116,14 +116,12 @@ transactionSchema.statics = {
       isNil
     );
 
-    return (
-      this.find(options)
-        .populate("user")
-        .sort({ createdAt: -1 })
-        // .skip(perPage * (page - 1))
-        // .limit(perPage)
-        .exec()
-    );
+    return this.find(options)
+      .populate("user")
+      .sort({ createdAt: -1 })
+      .skip(perPage * (page - 1))
+      .limit(perPage)
+      .exec();
   },
 };
 
