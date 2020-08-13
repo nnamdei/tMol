@@ -103,7 +103,7 @@ transactionSchema.statics = {
    */
   list({
     page = 1,
-    perPage = 100,
+    perPage = 30,
     cardName,
     subCategory,
     amount,
