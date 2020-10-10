@@ -13,6 +13,7 @@ router
   .post(authorize(ADMIN), controller.create);
 
 router.route("/:id").patch(authorize(ADMIN), controller.available);
+router.route("/:id").put(authorize(ADMIN), controller.whatsapp);
 router.route("/:id").delete(authorize(ADMIN), controller.delete);
 
 module.exports = router;

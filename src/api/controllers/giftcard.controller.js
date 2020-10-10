@@ -59,11 +59,34 @@ exports.available = async (req, res, next) => {
     }
   } catch (error) {
     return res.status(500).json({
-      message: "Unsuccesful",
+      message: "Unsuccessful",
       error: error.message,
     });
   }
 };
+
+
+exports.whatsapp = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const whatsapp = await GiftCard.findById(id);
+    await whatsapp.updateOne({ isWhatsapp: !whatsapp.isWhatsapp }, { useFindAndModify: false, new: true, });
+    await whatsapp.save();
+
+    if (whatsapp) {
+      return res.status(httpStatus.CREATED).json({
+        message: "Details updated",
+        whatsapp,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      message: "Unsuccessful",
+      error: error.message,
+    });
+  }
+};
+
 
 exports.delete = async (req, res, next) => {
   const { id } = req.params;

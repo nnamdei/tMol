@@ -29,6 +29,10 @@ const giftcardSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    isWhatsapp: {
+      type: Boolean,
+      default: false
+    },
     role: {
       type: String,
       enum: roles,
