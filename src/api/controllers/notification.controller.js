@@ -1,18 +1,26 @@
 const httpStatus = require("http-status");
 const { getFcmTokens, sendToDevice } = require('../services/firebaseMessage')
+
+
 exports.sendNotification = async (req, res, next) => {
   try {
     const { title, content } = req.body;
     const data = { title, content };
     if (data) {
-      let usersFcmTokens = await getFcmTokens('user')
-      if (usersFcmTokens.length != 0) {
-        await sendToDevice(usersFcmTokens, data, 'user')
+      let { firstList, secondList } = await getFcmTokens()
+      
+      if (firstList.length != 0) {
+        await sendToDevice(firstList, data)
+      }
+      
+      if (secondList.length != 0) {
+        await sendToDevice(secondList, data)
       }
       return res.status(httpStatus.CREATED).json({
         message: "Notification sent",
         data,
-        usersFcmTokens,
+        firstList,
+        secondList
       });
     }
     throw new Error("Unsuccessful");

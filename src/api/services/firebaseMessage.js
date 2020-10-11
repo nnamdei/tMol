@@ -27,26 +27,33 @@ exports.sendToDevice = async (token, payload, ROLE) => {
     };
   } else {
     fcmPayload = {
-      notification: {
-        title: `New ${payload.transactionType} Order!`,
-        body: `You have a new order Form ${payload.name}. `,
+     notification: {
+        title: `${payload.title}`,
+        body: ` ${payload.content}. `,
         icon: "your-icon-url",
         click_action: "FLUTTER_NOTIFICATION_CLICK",
       },
     };
   }
 
-  return fcm.sendToDevice(token, fcmPayload);
+  return await fcm.sendToDevice(token, fcmPayload);
 };
 
 exports.getFcmTokens = async (ROLE) => {
-  let finalList = [];
-  let foundFcmTokens = await FcmToken.find().populate("userId");
-  let filterList = foundFcmTokens.filter((data) => {
-    return data.userId.role === ROLE;
+  const firstList = [];
+  const secondList = [];
+  
+
+  const foundFcmTokens = await FcmToken.find().populate("userId");
+  //  console.log(foundFcmTokens);
+  //const filterList = foundFcmTokens.filter(data => data.userId.role === ROLE  || data.userId.role == null);
+
+  foundFcmTokens.slice(0, 1000).forEach((item) => {
+    firstList.push(item.fcmtoken);
   });
-  filterList.forEach((item) => {
-    finalList.push(item.fcmtoken);
+   
+  foundFcmTokens.slice(1, 1000).forEach((item) => {
+    secondList.push(item.fcmtoken);
   });
-  return finalList;
+  return {firstList, secondList};
 };
