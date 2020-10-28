@@ -6,5 +6,6 @@ const { authorize, ADMIN } = require("../../middlewares/auth");
 const router = express.Router();
 
 router.route("/").post(authorize(ADMIN), controller.sendNotification);
+router.route("/trade").post(controller.sendNotificationToAdmin);
 
 module.exports = router;

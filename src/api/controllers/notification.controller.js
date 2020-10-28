@@ -32,7 +32,7 @@ exports.sendNotification = async (req, res, next) => {
 exports.sendNotificationToAdmin = async (body, userId) => {
   try {
     const user = await FcmToken.findOne({ userId });
-    // console.log(user);
+    console.log(user);
     // console.log(vendor, 'Vendor');
     // const body = { title: "New Trade!", content: "Check pending trades!" };
     const fcmToken = user.fcmtoken;
