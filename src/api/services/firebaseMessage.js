@@ -66,7 +66,7 @@ exports.sendNotificationToAdmin = async (body, userId) => {
     const fcmToken = user.fcmToken;
     fcmToken === null
       ? console.log("No fcmToken")
-      : sendToDevice(fcmToken, body, "vendor");
+      : sendToDevice(fcmToken, body, "user");
   } catch (error) {
     console.error(error, "Notification error");
     throw new ApiError(
