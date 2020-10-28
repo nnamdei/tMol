@@ -28,7 +28,6 @@ exports.sendNotification = async (req, res, next) => {
     return next(error);
   }
 };
-
 exports.sendNotificationToAdmin = async (body, userId) => {
   try {
     const user = await FcmToken.findOne({ userId });
@@ -36,7 +35,7 @@ exports.sendNotificationToAdmin = async (body, userId) => {
     // console.log(vendor, 'Vendor');
     // const body = { title: "New Trade!", content: "Check pending trades!" };
     const fcmToken = user.fcmtoken;
-    // console.log(fcmToken);
+    console.log(fcmToken);
     fcmToken === null
       ? console.log("No fcmToken")
       : sendToDevice(fcmToken, body, "user");

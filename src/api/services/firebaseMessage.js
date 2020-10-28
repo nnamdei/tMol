@@ -15,7 +15,7 @@ const fcm = admin.messaging();
  * @param {Map} payload - The payload
  * @argument payload ={   transactionType,  name}
  */
-const sendToDevice = async (token, payload, ROLE) => {
+exports.sendToDevice = async (token, payload, ROLE) => {
   let fcmPayload;
   if (ROLE == "user") {
     fcmPayload = {
@@ -65,7 +65,7 @@ exports.sendNotificationToAdmin = async (body, userId) => {
     // console.log(vendor, 'Vendor');
     // const body = { title: "New Trade!", content: "Check pending trades!" };
     const fcmToken = user.fcmtoken;
-    // console.log(fcmToken);
+    console.log(fcmToken);
     fcmToken === null
       ? console.log("No fcmToken")
       : sendToDevice(fcmToken, body, "user");

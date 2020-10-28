@@ -6,7 +6,7 @@ const {
   sendNotificationToAdmin,
 } = require("../services/firebaseMessage");
 
-const Notification = require("../services/firebaseMessage");
+const Notification = require("../controllers/notification.controller");
 // console.log("HI");
 
 // /**
@@ -73,7 +73,7 @@ exports.create = async (req, res, next) => {
       title: "New Trade!",
       content: savedTransactionDetails.cardName,
     };
-    Notification.sendNotificationToAdmin(body, req.user.id);
+    Notification.sendNotificationToAdmin(body, req.user._id);
     return res.json(savedTransactionDetails);
   } catch (error) {
     return next(error, "Error");
