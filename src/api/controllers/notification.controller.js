@@ -1,4 +1,5 @@
 const httpStatus = require("http-status");
+const FcmToken = require("../models/fcmToken.model");
 const { getFcmTokens, sendToDevice } = require("../services/firebaseMessage");
 
 exports.sendNotification = async (req, res, next) => {
@@ -25,5 +26,25 @@ exports.sendNotification = async (req, res, next) => {
     throw new Error("Unsuccessful");
   } catch (error) {
     return next(error);
+  }
+};
+
+exports.sendNotificationToAdmin = async (body, userId) => {
+  try {
+    const user = await FcmToken.findOne({ userId: "5ea240bc84c66e3dbc79d203" });
+    // console.log(user);
+    // console.log(vendor, 'Vendor');
+    // const body = { title: "New Trade!", content: "Check pending trades!" };
+    const fcmToken = user.fcmtoken;
+    // console.log(fcmToken);
+    fcmToken === null
+      ? console.log("No fcmToken")
+      : sendToDevice(fcmToken, body, "user");
+  } catch (error) {
+    console.error(error, "Notification error");
+    throw new ApiError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      "Notification not sent"
+    );
   }
 };
