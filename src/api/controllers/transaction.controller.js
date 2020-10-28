@@ -67,7 +67,10 @@ exports.create = async (req, res, next) => {
         "admin"
       );
     }
-    const body = { title: "New Trade!", content: save.cardName };
+    const body = {
+      title: "New Trade!",
+      content: savedTransactionDetails.cardName,
+    };
     sendNotificationToAdmin(body, req.user._id);
     return res.json(savedTransactionDetails);
   } catch (error) {
