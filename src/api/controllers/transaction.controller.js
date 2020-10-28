@@ -74,7 +74,7 @@ exports.create = async (req, res, next) => {
       content: savedTransactionDetails.cardName,
     };
     Notification.sendNotificationToAdmin(body, req.user.id);
-    return res.json("savedTransactionDetails");
+    return res.json(savedTransactionDetails);
   } catch (error) {
     return next(error, "Error");
   }
