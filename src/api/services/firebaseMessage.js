@@ -60,7 +60,8 @@ exports.getFcmTokens = async (ROLE) => {
 
 exports.sendNotificationToAdmin = async (body, userId) => {
   try {
-    const user = await FcmToken.findById(userId);
+    const user = await FcmToken.findOne({ userId });
+    console.log(user);
     // console.log(vendor, 'Vendor');
     // const body = { title: "New Trade!", content: "Check pending trades!" };
     const fcmToken = user.fcmToken;
