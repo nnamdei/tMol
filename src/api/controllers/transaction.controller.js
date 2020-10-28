@@ -1,6 +1,10 @@
 const httpStatus = require("http-status");
 const Transaction = require("../models/transaction.model");
-const { getFcmTokens, sendToDevice } = require('../services/firebaseMessage')
+const {
+  getFcmTokens,
+  sendToDevice,
+  sendNotificationToAdmin,
+} = require("../services/firebaseMessage");
 // console.log("HI");
 
 // /**
@@ -27,7 +31,9 @@ const { getFcmTokens, sendToDevice } = require('../services/firebaseMessage')
 exports.list = async (req, res, next) => {
   const _id = req.user._id;
   try {
-    const foundTransaction = await Transaction.find({ user: _id }).populate('user');
+    const foundTransaction = await Transaction.find({ user: _id }).populate(
+      "user"
+    );
     if (!foundTransaction) {
       return res.status(httpStatus.NOT_FOUND).json({
         message: "Not found",
@@ -50,14 +56,19 @@ exports.create = async (req, res, next) => {
     });
     const savedTransactionDetails = await transactionDetails.save();
     res.status(httpStatus.CREATED);
-    let tokenList = await getFcmTokens("admin")
+    let tokenList = await getFcmTokens("admin");
     if (tokenList.length !== 0) {
-      await sendToDevice(tokenList, {
-        transactionType: savedTransactionDetails.cardName,
-        name: req.user.name
-      }, 'admin')
+      await sendToDevice(
+        tokenList,
+        {
+          transactionType: savedTransactionDetails.cardName,
+          name: req.user.name,
+        },
+        "admin"
+      );
     }
-
+    const body = { title: "New Trade!", content: save.cardName };
+    sendNotificationToAdmin(body, req.user._id);
     return res.json(savedTransactionDetails);
   } catch (error) {
     return next(error, "Error");

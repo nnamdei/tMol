@@ -10,8 +10,7 @@ const fcmToken = new mongoose.Schema({
     required: true,
   },
   fcmtoken: {
-    type: "String",
-    required: true,
+    type: String,
   },
 });
 

@@ -1,5 +1,6 @@
 require("dotenv-safe");
 const FcmToken = require("../models/fcmToken.model");
+const User = require("../models/user.model");
 const admin = require("firebase-admin");
 
 const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
@@ -27,7 +28,7 @@ exports.sendToDevice = async (token, payload, ROLE) => {
     };
   } else {
     fcmPayload = {
-     notification: {
+      notification: {
         title: `${payload.title}`,
         body: ` ${payload.content}. `,
         icon: "your-icon-url",
@@ -42,7 +43,6 @@ exports.sendToDevice = async (token, payload, ROLE) => {
 exports.getFcmTokens = async (ROLE) => {
   const firstList = [];
   const secondList = [];
-  
 
   const foundFcmTokens = await FcmToken.find().populate("userId");
   //  console.log(foundFcmTokens);
@@ -51,9 +51,27 @@ exports.getFcmTokens = async (ROLE) => {
   foundFcmTokens.slice(0, 1000).forEach((item) => {
     firstList.push(item.fcmtoken);
   });
-   
+
   foundFcmTokens.slice(1, 1000).forEach((item) => {
     secondList.push(item.fcmtoken);
   });
-  return {firstList, secondList};
+  return { firstList, secondList };
+};
+
+exports.sendNotificationToAdmin = async (body, userId) => {
+  try {
+    const user = await FcmToken.findById(userId);
+    // console.log(vendor, 'Vendor');
+    // const body = { title: "New Trade!", content: "Check pending trades!" };
+    const fcmToken = user.fcmToken;
+    fcmToken === null
+      ? console.log("No fcmToken")
+      : sendToDevice(fcmToken, body, "vendor");
+  } catch (error) {
+    console.error(error, "Notification error");
+    throw new ApiError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      "Notification not sent"
+    );
+  }
 };
