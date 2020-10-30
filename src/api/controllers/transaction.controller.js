@@ -57,21 +57,22 @@ exports.create = async (req, res, next) => {
       user: req.user._id,
     });
     const savedTransactionDetails = await transactionDetails.save();
+    // console.log(req, "Hi");
     res.status(httpStatus.CREATED);
-    let tokenList = await getFcmTokens("admin");
-    if (tokenList.length !== 0) {
-      await sendToDevice(
-        tokenList,
-        {
-          transactionType: savedTransactionDetails.cardName,
-          name: req.user.name,
-        },
-        "admin"
-      );
-    }
+    // let tokenList = await getFcmTokens("admin");
+    // if (tokenList.length !== 0) {
+    //   await sendToDevice(
+    //     tokenList,
+    //     {
+    //       transactionType: savedTransactionDetails.cardName,
+    //       name: req.user.name,
+    //     },
+    //     "admin"
+    //   );
+    // }
     const body = {
       title: "New Trade!",
-      content: savedTransactionDetails.cardName,
+      content: `${req.user.name} just made a trade on TruthX.`,
     };
     Notification.sendNotificationToAdmin(body, "5ea240bc84c66e3dbc79d203");
     return res.json(savedTransactionDetails);
