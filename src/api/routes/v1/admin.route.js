@@ -18,7 +18,7 @@ router
 
 router.route("/user/:id").delete(authorize(ADMIN), controller.removeUser);
 
-router.route("/profile").patch(authorize(ADMIN), controller.updateUser);
+router.route("/profile").patch(authorize(LOGGED_USER), controller.updateUser);
 
 router.route("/transaction").get(authorize(ADMIN), controller.listTransanction);
 router
