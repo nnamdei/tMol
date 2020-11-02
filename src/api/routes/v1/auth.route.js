@@ -3,7 +3,7 @@ const validate = require("express-validation");
 const controller = require("../../controllers/auth.controller");
 const services = require("../../services/updateBankDetails");
 const servicePassword = require("../../services/updatePassword");
-const { authorize, LOGGED_USER } = require("../../middlewares/auth");
+const { authorize, LOGGED_USER, ADMIN } = require("../../middlewares/auth");
 
 const {
   login,
@@ -103,6 +103,14 @@ router
   .patch(
     validate(updatePassword),
     authorize(LOGGED_USER),
+    servicePassword.updatePassword
+  );
+
+router
+  .route("/admin/changePassword")
+  .patch(
+    validate(updatePassword),
+    authorize(ADMIN),
     servicePassword.updatePassword
   );
 
